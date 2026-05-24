@@ -47,7 +47,7 @@ button{border:none;outline:none;cursor:pointer;font-family:'Poppins',sans-serif;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:18px 60px;
+    padding:18px 4vw;
     z-index:9000;
     transition:background 0.4s, box-shadow 0.4s;
     background:transparent;
@@ -810,6 +810,70 @@ scrollbar-width:none;
 .adblock-secondary:hover{
     background:#3a3a3a;
     color:white;
+}
+
+
+.adblock-secondary:hover{
+    background:#3a3a3a;
+    color:white;
+}
+
+/* ══════════════════════════════════
+   RESPONSIVIDADE MOBILE
+══════════════════════════════════ */
+@media (max-width: 768px){
+
+    .navbar{
+        padding:12px 15px;
+        flex-direction:column;
+        align-items:flex-start;
+        gap:12px;
+    }
+
+    .logo{
+        font-size:32px;
+        letter-spacing:2px;
+    }
+
+    .menu{
+        width:100%;
+        display:flex;
+        overflow-x:auto;
+        gap:6px;
+        padding-bottom:4px;
+        scrollbar-width:none;
+    }
+
+    .menu::-webkit-scrollbar{
+        display:none;
+    }
+
+    .menu a{
+        white-space:nowrap;
+        font-size:13px;
+        padding:7px 12px;
+        flex-shrink:0;
+    }
+
+    .search-area{
+        width:100%;
+    }
+
+    .search-wrap{
+        width:100%;
+    }
+
+    .search-input{
+        width:100%;
+        font-size:14px;
+    }
+
+    .search-results{
+        width:100%;
+        left:0;
+        right:auto;
+    }
+
 }
 
 </style>
