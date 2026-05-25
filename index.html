@@ -32,10 +32,16 @@ html{scroll-behavior:smooth;}
 a{text-decoration:none;color:inherit;cursor:pointer;}
 button{border:none;outline:none;cursor:pointer;font-family:'Poppins',sans-serif;}
 
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar{width:4px;height:4px;}
-::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:#333;border-radius:4px;}
+/* ── OCULTAR SCROLL VERTICAL ── */
+html, body{
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar{
+    display:none;
+}
 
 /* ══════════════════════════════════
    NAVBAR
@@ -47,7 +53,7 @@ button{border:none;outline:none;cursor:pointer;font-family:'Poppins',sans-serif;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:18px 60px;
+    padding:18px 4vw;
     z-index:9000;
     transition:background 0.4s, box-shadow 0.4s;
     background:transparent;
@@ -421,15 +427,24 @@ button{border:none;outline:none;cursor:pointer;font-family:'Poppins',sans-serif;
     display:flex;
     gap:12px;
     overflow-x:auto;
-    padding-bottom:12px;
-    padding-top:4px;
+    overflow-y:hidden;
+
+    padding:4px 0 12px;
+
     scroll-behavior:smooth;
-    cursor:grab;
+
     -webkit-overflow-scrolling:touch;
 
     user-select:none;
-touch-action:pan-x;
-scrollbar-width:none;
+    touch-action:pan-x;
+
+    scrollbar-width:none;
+
+    overscroll-behavior-x:contain;
+}
+
+.movie-row::-webkit-scrollbar{
+    display:none;
 }
 .movie-row:active{cursor:grabbing;}
 .movie-row::-webkit-scrollbar{height:3px;}
@@ -730,12 +745,337 @@ scrollbar-width:none;
     .page-header{padding:90px 20px 16px;}
     .page-grid{padding:16px 20px 40px;gap:12px;}
 }
-@media(max-width:600px){
-    .banner-content h1{font-size:38px;}
-    .menu a span{display:none;}
-    .search-input{width:90px;}
-    :root{--card-w:140px;--card-h:210px;}
-    .player-frame{height:55vh;}
+/* ══════════════════════════════════
+   NAVBAR MOBILE PREMIUM
+══════════════════════════════════ */
+@media(max-width:768px){
+
+.navbar{
+    position:fixed;
+    top:auto;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:75px;
+
+    padding:10px 12px;
+
+    background:rgba(10,10,10,.97);
+    backdrop-filter:blur(15px);
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    z-index:99999;
+}
+
+.logo{
+    display:none;
+}
+
+/* menu ocupa quase toda largura */
+.menu{
+    width:100%;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    gap:5px;
+}
+
+.menu li{
+    flex:1;
+}
+
+.menu a{
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    gap:4px;
+
+    padding:8px 5px;
+    border-radius:12px;
+
+    font-size:10px;
+
+    min-height:55px;
+
+    transition:.3s;
+}
+
+/* ícones */
+#navInicio::before{
+content:"🏠";
+font-size:20px;
+}
+
+#navFilmes::before{
+content:"🎬";
+font-size:20px;
+}
+
+#navSeries::before{
+content:"📺";
+font-size:20px;
+}
+
+#navAnimes::before{
+content:"🎨";
+font-size:20px;
+}
+
+#navLista::before{
+content:"❤️";
+font-size:20px;
+}
+
+/* animação item ativo */
+.menu a.active{
+
+background:rgba(229,9,20,.12);
+
+transform:translateY(-6px);
+
+color:white;
+}
+
+.menu a.active::after{
+
+bottom:0;
+height:3px;
+
+transform:scaleX(.8);
+
+}
+
+/* BUSCA MOBILE PREMIUM V2 */
+
+.search-area{
+    position:fixed;
+    right:18px;
+    bottom:95px;
+    z-index:999999;
+}
+
+.search-wrap{
+
+    width:58px;
+    height:58px;
+
+    display:flex;
+    align-items:center;
+
+    overflow:hidden;
+
+    padding:0 18px;
+
+    border-radius:30px;
+
+    background:rgba(18,18,18,.85);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+    0 8px 30px rgba(0,0,0,.5),
+    0 0 25px rgba(229,9,20,.15);
+
+    transition:
+    width .45s cubic-bezier(.22,.61,.36,1),
+    box-shadow .3s,
+    border-color .3s;
+}
+
+.search-area{
+    overflow:visible;
+}
+
+.search-wrap:focus-within{
+
+width:280px;
+
+border-color:rgba(229,9,20,.5);
+
+box-shadow:
+0 10px 35px rgba(0,0,0,.6),
+0 0 40px rgba(229,9,20,.35);
+
+}
+
+.search-wrap:hover{
+
+    box-shadow:
+    0 10px 35px rgba(0,0,0,.6),
+    0 0 35px rgba(229,9,20,.25);
+
+}
+
+.search-wrap:focus-within{
+
+    width:280px;
+
+    border-color:rgba(229,9,20,.5);
+
+    box-shadow:
+    0 10px 35px rgba(0,0,0,.6),
+    0 0 40px rgba(229,9,20,.35);
+
+}
+
+.search-icon{
+    min-width:24px;
+
+    background:none;
+    border:none;
+
+    font-size:20px;
+    color:#E50914;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.search-wrap:focus-within .search-icon{
+
+    transform:rotate(-10deg) scale(1.1);
+
+}
+
+.search-input{
+
+    width:100%;
+
+    border:none;
+    outline:none;
+
+    background:transparent;
+
+    color:white;
+
+    font-size:14px;
+
+    margin-left:12px;
+
+    opacity:0;
+
+    transition:.3s;
+}
+
+.search-wrap:focus-within .search-input{
+
+    opacity:1;
+
+}
+
+.search-input::placeholder{
+
+    color:rgba(255,255,255,.45);
+
+}
+
+/* resultados */
+
+.search-results{
+
+position:absolute;
+
+bottom:70px;
+top:auto;
+right:0;
+
+width:280px;
+max-height:350px;
+
+overflow-y:auto;
+
+border:none;
+border-radius:18px;
+
+background:rgba(18,18,18,.97);
+
+backdrop-filter:blur(20px);
+
+box-shadow:
+0 20px 60px rgba(0,0,0,.7);
+
+z-index:9999999;
+}
+
+/* evita navbar cobrindo conteúdo */
+body{
+
+padding-bottom:90px;
+
+}
+
+/* ajustes extras */
+
+.banner-content h1{
+
+font-size:40px;
+
+}
+
+.banner-btns{
+
+flex-wrap:wrap;
+
+}
+
+:root{
+
+--card-w:130px;
+--card-h:200px;
+
+}
+
+}
+
+.banner-content h1{
+    font-size:38px;
+}
+
+.menu a{
+    position:relative;
+}
+
+.menu a::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-2px;
+    width:100%;
+    height:2px;
+    background:var(--red);
+    border-radius:2px;
+
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform 0.3s ease;
+}
+
+.menu a.active::after{
+    transform:scaleX(1);
+}
+
+.search-input{
+    width:90px;
+}
+
+:root{
+    --card-w:140px;
+    --card-h:210px;
+}
+
+.player-frame{
+    height:55vh;
 }
 
 /* ══════════════════════════════════
@@ -812,6 +1152,12 @@ scrollbar-width:none;
     color:white;
 }
 
+
+.adblock-secondary:hover{
+    background:#3a3a3a;
+    color:white;
+}
+
 </style>
 </head>
 <body>
@@ -821,7 +1167,9 @@ scrollbar-width:none;
     <div class="logo" id="logoSite">OFFFLIX</div>
 
     <ul class="menu">
-        <li><a id="navInicio" data-page="inicio" class="active">Início</a></li>
+        <li><a id="navInicio" data-page="inicio" class="active">
+<span>Início</span>
+</a></li>
         <li><a id="navFilmes" data-page="filmes">Filmes</a></li>
         <li><a id="navSeries" data-page="series">Séries</a></li>
         <li><a id="navAnimes" data-page="animes">Animações</a></li>
@@ -829,10 +1177,21 @@ scrollbar-width:none;
     </ul>
 
     <div class="search-area">
-        <div class="search-wrap">
-            <span class="search-icon">🔍</span>
-            <input type="text" class="search-input" id="searchInput" placeholder="Buscar filmes, séries...">
+        <div class="search-wrap" id="searchWrap">
+    
+            <button class="search-icon" id="searchBtn">
+                🔍
+            </button>
+    
+            <input
+                type="text"
+                class="search-input"
+                id="searchInput"
+                placeholder="Buscar filmes, séries..."
+            >
+    
         </div>
+    
         <div class="search-results" id="searchResults"></div>
     </div>
 </header>
@@ -1204,15 +1563,15 @@ function preencherGrid(gridId, items, tipo) {
 /* ══════════════════════════════════════════════
    DRAG SCROLL NAS ROWS
 ══════════════════════════════════════════════ */
-function enableDrag(el) {
+function enableDrag(el){
 
 let isDown = false;
 let startX = 0;
 let scrollLeft = 0;
 let moved = false;
 
-// DESKTOP
-el.addEventListener("mousedown", (e) => {
+/* DESKTOP */
+el.addEventListener("mousedown",(e)=>{
 
     isDown = true;
     moved = false;
@@ -1224,82 +1583,65 @@ el.addEventListener("mousedown", (e) => {
 
 });
 
-window.addEventListener("mouseup", () => {
+window.addEventListener("mouseup",()=>{
 
     isDown = false;
 
-    setTimeout(() => {
+    requestAnimationFrame(()=>{
         moved = false;
         el.classList.remove("dragging");
-    }, 50);
+    });
 
 });
 
-el.addEventListener("mousemove", (e) => {
+el.addEventListener("mousemove",(e)=>{
 
-    if (!isDown) return;
+    if(!isDown) return;
 
-    const distance = e.pageX - startX;
+    const distance = (e.pageX - startX)*1.5;
 
-    if (Math.abs(distance) > 25) {
-        moved = true;
+    if(Math.abs(distance)>10){
+        moved=true;
     }
 
-    if (moved) {
-        e.preventDefault();
-        el.scrollLeft = scrollLeft - distance;
-    }
+    e.preventDefault();
+
+    el.scrollLeft = scrollLeft - distance;
 
 });
 
-// MOBILE
-el.addEventListener("touchstart", (e) => {
+/* MOBILE */
+/* deixa o navegador cuidar sozinho */
 
-    isDown = true;
-    moved = false;
+el.style.webkitOverflowScrolling="touch";
+el.style.scrollBehavior="smooth";
 
-    startX = e.touches[0].pageX;
-    scrollLeft = el.scrollLeft;
+/* impede clique acidental durante arraste */
 
-}, { passive: true });
+el.addEventListener("touchstart",()=>{
 
-el.addEventListener("touchmove", (e) => {
+    moved=false;
 
-    if (!isDown) return;
+},{passive:true});
 
-    const distance = e.touches[0].pageX - startX;
+el.addEventListener("touchmove",()=>{
 
-    if (Math.abs(distance) > 25) {
-        moved = true;
-    }
+    moved=true;
 
-    if (moved) {
-        el.scrollLeft = scrollLeft - distance;
-    }
+},{passive:true});
 
-}, { passive: true });
+el.addEventListener("click",(e)=>{
 
-window.addEventListener("touchend", () => {
-
-    isDown = false;
-
-    setTimeout(() => {
-        moved = false;
-    }, 50);
-
-});
-
-// BLOQUEIA clique SOMENTE se realmente arrastou
-el.addEventListener("click", (e) => {
-
-    if (moved) {
+    if(moved){
 
         e.preventDefault();
         e.stopPropagation();
 
+        moved=false;
+
     }
 
-}, true);
+},true);
 
 }
 
@@ -1966,6 +2308,29 @@ if (scrollAtual >= alturaTotal - 1000) {
     }
 
 }
+
+});
+
+/* abrir busca no celular */
+const searchBtn = document.getElementById("searchBtn");
+const searchWrap = document.getElementById("searchWrap");
+const searchInput = document.getElementById("searchInput");
+
+searchBtn.addEventListener("click", () => {
+
+    searchWrap.classList.add("open");
+
+    setTimeout(() => {
+        searchInput.focus();
+    }, 100);
+
+});
+
+document.addEventListener("click", e => {
+
+    if (!e.target.closest(".search-area")) {
+        searchWrap.classList.remove("open");
+    }
 
 });
 
