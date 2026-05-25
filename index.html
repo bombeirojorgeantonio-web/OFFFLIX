@@ -1351,65 +1351,6 @@ button{border:none;outline:none;cursor:pointer;font-family:'Poppins',sans-serif;
 
     </div>
 </div>
-
-/* ══════════════════════════════════════
-   MOBILE NAVBAR
-══════════════════════════════════════ */
-
-const hamburgerBtn = document.getElementById("hamburgerBtn");
-const mobileMenu = document.getElementById("mobileMenu");
-
-hamburgerBtn.addEventListener("click", () => {
-    mobileMenu.classList.toggle("open");
-});
-
-/* abrir busca */
-const openSearch = document.getElementById("openSearch");
-const mobileSearch = document.getElementById("mobileSearch");
-
-openSearch.addEventListener("click", () => {
-    mobileSearch.classList.toggle("open");
-});
-
-/* navegação mobile */
-document.querySelectorAll(".mobile-menu a").forEach(link => {
-
-    link.addEventListener("click", () => {
-
-        document
-            .querySelectorAll(".mobile-menu a")
-            .forEach(a => a.classList.remove("active"));
-
-        link.classList.add("active");
-
-        irPara(link.dataset.page);
-
-        mobileMenu.classList.remove("open");
-
-    });
-
-});
-
-/* logo mobile */
-document.getElementById("mobileLogo")
-.addEventListener("click", () => {
-
-    irPara("inicio");
-
-});
-
-/* FECHAR MENU clicando fora */
-document.addEventListener("click", (e) => {
-
-    const clicouMenu = mobileMenu.contains(e.target);
-    const clicouBtn = hamburgerBtn.contains(e.target);
-
-    if (!clicouMenu && !clicouBtn) {
-        mobileMenu.classList.remove("open");
-    }
-
-});
-
 <script>
 /* ══════════════════════════════════════════════
    CONFIG
