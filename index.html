@@ -755,333 +755,84 @@ button{border:none;outline:none;cursor:pointer;font-family:'Poppins',sans-serif;
    TABLET
 ========================================================= */
 
-.navbar{
-    position:fixed;
+@media screen and (max-width:900px){
 
-    top:0;
-    bottom:auto;
+    .navbar{
+        padding:14px 20px;
+    }
 
-    left:0;
-    width:100%;
-    height:75px;
+    .menu{
+        gap:4px;
+    }
 
-    padding:10px 12px;
+    .menu a{
+        padding:6px 10px;
+        font-size:13px;
+    }
 
-    background:rgba(10,10,10,.97);
+    .search-input{
+        width:130px;
+    }
 
-    backdrop-filter:blur(15px);
+    .banner-content{
+        margin-left:24px;
+        max-width:90%;
+    }
 
-    border-top:none;
-    border-bottom:1px solid rgba(255,255,255,.08);
+    .banner-content h1{
+        font-size:52px;
+    }
 
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+    .banner-dots{
+        left:24px;
+    }
 
-    z-index:99999;
+    @media screen and (max-width:900px){
+
+.category{
+    padding:10px 0 24px;
 }
-
-.logo{
-    display:none;
-}
-
-/* menu ocupa quase toda largura */
-.menu{
-    width:100%;
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    gap:5px;
-}
-
-.menu li{
-    flex:1;
-}
-
-.menu a{
-
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-
-    gap:4px;
-
-    padding:8px 5px;
-    border-radius:12px;
-
-    font-size:10px;
-
-    min-height:55px;
-
-    transition:.3s;
-}
-
-/* ícones */
-#navInicio::before{
-content:"🏠";
-font-size:20px;
-}
-
-#navFilmes::before{
-content:"🎬";
-font-size:20px;
-}
-
-#navSeries::before{
-content:"📺";
-font-size:20px;
-}
-
-#navAnimes::before{
-content:"🎨";
-font-size:20px;
-}
-
-#navLista::before{
-content:"❤️";
-font-size:20px;
-}
-
-/* animação item ativo */
-.menu a.active{
-
-background:rgba(229,9,20,.12);
-
-transform:translateY(-6px);
-
-color:white;
-}
-
-.menu a.active::after{
-
-bottom:0;
-height:3px;
-
-transform:scaleX(.8);
 
 }
 
-/* BUSCA MOBILE PREMIUM V2 */
+    .page-header{
+        padding:90px 20px 16px;
+    }
 
-.search-area{
-    position:fixed;
-    right:18px;
-    top:85px;
-    z-index:999999;
-}
-
-.search-wrap{
-
-    width:58px;
-    height:58px;
-
-    display:flex;
-    align-items:center;
-
-    overflow:hidden;
-
-    padding:0 18px;
-
-    border-radius:30px;
-
-    background:rgba(18,18,18,.85);
-
-    backdrop-filter:blur(18px);
-
-    border:1px solid rgba(255,255,255,.08);
-
-    box-shadow:
-    0 8px 30px rgba(0,0,0,.5),
-    0 0 25px rgba(229,9,20,.15);
-
-    transition:
-    width .45s cubic-bezier(.22,.61,.36,1),
-    box-shadow .3s,
-    border-color .3s;
-}
-
-.search-area{
-    overflow:visible;
-}
-
-.search-wrap:focus-within{
-
-width:280px;
-
-border-color:rgba(229,9,20,.5);
-
-box-shadow:
-0 10px 35px rgba(0,0,0,.6),
-0 0 40px rgba(229,9,20,.35);
+    .page-grid{
+        padding:16px 20px 40px;
+        gap:12px;
+    }
 
 }
 
-.search-wrap:hover{
+/* =========================================================
+   MOBILE
+========================================================= */
 
-    box-shadow:
-    0 10px 35px rgba(0,0,0,.6),
-    0 0 35px rgba(229,9,20,.25);
+@media screen and (max-width:600px){
 
-}
+    :root{
+        --card-w:140px;
+        --card-h:210px;
+    }
 
-.search-wrap:focus-within{
+    .banner-content h1{
+        font-size:38px;
+    }
 
-    width:280px;
+    .menu a span{
+        display:none;
+    }
 
-    border-color:rgba(229,9,20,.5);
+    .search-input{
+        width:90px;
+    }
 
-    box-shadow:
-    0 10px 35px rgba(0,0,0,.6),
-    0 0 40px rgba(229,9,20,.35);
+    .player-frame{
+        height:55vh;
+    }
 
-}
-
-.search-icon{
-    min-width:24px;
-
-    background:none;
-    border:none;
-
-    font-size:20px;
-    color:#E50914;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.search-wrap:focus-within .search-icon{
-
-    transform:rotate(-10deg) scale(1.1);
-
-}
-
-.search-input{
-
-    width:100%;
-
-    border:none;
-    outline:none;
-
-    background:transparent;
-
-    color:white;
-
-    font-size:14px;
-
-    margin-left:12px;
-
-    opacity:0;
-
-    transition:.3s;
-}
-
-.search-wrap:focus-within .search-input{
-
-    opacity:1;
-
-}
-
-.search-input::placeholder{
-
-    color:rgba(255,255,255,.45);
-
-}
-
-/* resultados */
-
-.search-results{
-
-position:absolute;
-
-top:70px;
-bottom:auto;
-right:0;
-
-width:280px;
-max-height:350px;
-
-overflow-y:auto;
-
-border:none;
-border-radius:18px;
-
-background:rgba(18,18,18,.97);
-
-backdrop-filter:blur(20px);
-
-box-shadow:
-0 20px 60px rgba(0,0,0,.7);
-
-z-index:9999999;
-}
-
-/* evita navbar cobrindo conteúdo */
-body{
-    padding-top:90px;
-    padding-bottom:0;
-}
-
-/* ajustes extras */
-
-.banner-content h1{
-
-font-size:40px;
-
-}
-
-.banner-btns{
-
-flex-wrap:wrap;
-
-}
-
-:root{
-
---card-w:130px;
---card-h:200px;
-
-}
-
-.banner-content h1{
-    font-size:38px;
-}
-
-.menu a{
-    position:relative;
-}
-
-.menu a::after{
-    content:"";
-    position:absolute;
-    left:0;
-    bottom:-2px;
-    width:100%;
-    height:2px;
-    background:var(--red);
-    border-radius:2px;
-
-    transform:scaleX(0);
-    transform-origin:left;
-    transition:transform 0.3s ease;
-}
-
-.menu a.active::after{
-    transform:scaleX(1);
-}
-
-.search-input{
-    width:90px;
-}
-
-:root{
-    --card-w:140px;
-    --card-h:210px;
-}
-
-.player-frame{
-    height:55vh;
 }
 
 /* ══════════════════════════════════
@@ -1158,6 +909,165 @@ flex-wrap:wrap;
     color:white;
 }
 
+/* ══════════════════════════════════
+   MOBILE NAVBAR
+══════════════════════════════════ */
+
+.mobile-navbar{
+    display:none;
+}
+
+/* TABLET + MOBILE */
+@media screen and (max-width:900px){
+
+    /* esconde navbar desktop */
+    .navbar{
+        display:none;
+    }
+
+    .mobile-navbar{
+        display:block;
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        z-index:99999;
+
+        background:rgba(10,10,10,0.96);
+        backdrop-filter:blur(10px);
+
+        border-bottom:1px solid rgba(255,255,255,0.06);
+    }
+
+    .mobile-top{
+        height:70px;
+
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+
+        padding:0 18px;
+    }
+
+    .mobile-actions{
+        display:flex;
+        align-items:center;
+        gap:10px;
+    }
+
+    .hamburger,
+    .mobile-search-btn{
+        width:42px;
+        height:42px;
+
+        border-radius:10px;
+
+        background:#1b1b1b;
+        color:white;
+
+        font-size:18px;
+
+        display:flex;
+        align-items:center;
+        justify-content:center;
+
+        transition:0.2s;
+    }
+
+    .hamburger:hover,
+    .mobile-search-btn:hover{
+        background:#2a2a2a;
+    }
+
+    /* busca */
+    .mobile-search{
+        display:none;
+        padding:0 18px 18px;
+    }
+
+    .mobile-search.open{
+        display:block;
+    }
+
+    .mobile-search .search-wrap{
+        width:100%;
+    }
+
+    .mobile-search .search-input{
+        width:100%;
+    }
+
+    .mobile-search .search-results{
+        position:relative;
+        width:100%;
+        top:10px;
+        right:auto;
+    }
+
+    /* menu */
+    .mobile-menu{
+        position:fixed;
+
+        top:0;
+        right:-100%;
+
+        width:260px;
+        height:100vh;
+
+        background:#111;
+
+        display:flex;
+        flex-direction:column;
+
+        padding:90px 20px 20px;
+
+        gap:10px;
+
+        transition:0.35s ease;
+
+        border-left:1px solid #222;
+    }
+
+    .mobile-menu.open{
+        right:0;
+    }
+
+    .mobile-menu a{
+        padding:14px 16px;
+
+        border-radius:10px;
+
+        background:#1a1a1a;
+
+        color:#ccc;
+
+        font-size:14px;
+        font-weight:500;
+
+        transition:0.2s;
+    }
+
+    .mobile-menu a.active{
+        background:#E50914;
+        color:white;
+    }
+
+    .mobile-menu a:hover{
+        background:#222;
+        color:white;
+    }
+
+    /* evita conteúdo atrás da navbar */
+    .page-header{
+        padding-top:100px;
+    }
+
+    .banner-content{
+        padding-top:40px;
+    }
+
+}
+
 </style>
 </head>
 <body>
@@ -1166,36 +1076,73 @@ flex-wrap:wrap;
 <header class="navbar" id="navbar">
     <div class="logo" id="logoSite">OFFFLIX</div>
 
-
     <ul class="menu">
-        <li><a id="navInicio" data-page="inicio" class="active">
-<span>Início</span>
-</a></li>
+        <li><a id="navInicio" data-page="inicio" class="active">Início</a></li>
         <li><a id="navFilmes" data-page="filmes">Filmes</a></li>
         <li><a id="navSeries" data-page="series">Séries</a></li>
         <li><a id="navAnimes" data-page="animes">Animações</a></li>
         <li><a id="navLista" data-page="lista">Minha Lista</a></li>
     </ul>
 
-
     <div class="search-area">
-        <div class="search-wrap" id="searchWrap">
-   
-            <button class="search-icon" id="searchBtn">
+        <div class="search-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" id="searchInput" placeholder="Buscar filmes, séries...">
+        </div>
+        <div class="search-results" id="searchResults"></div>
+    </div>
+</header>
+
+<!-- ════════════ MOBILE NAVBAR ════════════ -->
+<header class="mobile-navbar">
+
+    <div class="mobile-top">
+
+        <div class="logo" id="mobileLogo">OFFFLIX</div>
+
+        <div class="mobile-actions">
+
+            <button class="mobile-search-btn" id="openSearch">
                 🔍
             </button>
-   
+
+            <button class="hamburger" id="hamburgerBtn">
+                ☰
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- busca mobile -->
+    <div class="mobile-search" id="mobileSearch">
+
+        <div class="search-wrap">
+            <span class="search-icon">🔍</span>
+
             <input
                 type="text"
                 class="search-input"
-                id="searchInput"
+                id="searchInputMobile"
                 placeholder="Buscar filmes, séries..."
             >
-   
         </div>
-   
-        <div class="search-results" id="searchResults"></div>
+
+        <div class="search-results" id="searchResultsMobile"></div>
+
     </div>
+
+    <!-- menu lateral -->
+    <div class="mobile-menu" id="mobileMenu">
+
+        <a data-page="inicio" class="active">🏠 Início</a>
+        <a data-page="filmes">🎬 Filmes</a>
+        <a data-page="series">📺 Séries</a>
+        <a data-page="animes">🎨 Animações</a>
+        <a data-page="lista">💖 Minha Lista</a>
+
+    </div>
+
 </header>
 
 <!-- ════════════ PÁGINA INÍCIO ════════════ -->
@@ -1404,6 +1351,64 @@ flex-wrap:wrap;
 
     </div>
 </div>
+
+/* ══════════════════════════════════════
+   MOBILE NAVBAR
+══════════════════════════════════════ */
+
+const hamburgerBtn = document.getElementById("hamburgerBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+hamburgerBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("open");
+});
+
+/* abrir busca */
+const openSearch = document.getElementById("openSearch");
+const mobileSearch = document.getElementById("mobileSearch");
+
+openSearch.addEventListener("click", () => {
+    mobileSearch.classList.toggle("open");
+});
+
+/* navegação mobile */
+document.querySelectorAll(".mobile-menu a").forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        document
+            .querySelectorAll(".mobile-menu a")
+            .forEach(a => a.classList.remove("active"));
+
+        link.classList.add("active");
+
+        irPara(link.dataset.page);
+
+        mobileMenu.classList.remove("open");
+
+    });
+
+});
+
+/* logo mobile */
+document.getElementById("mobileLogo")
+.addEventListener("click", () => {
+
+    irPara("inicio");
+
+});
+
+/* FECHAR MENU clicando fora */
+document.addEventListener("click", (e) => {
+
+    const clicouMenu = mobileMenu.contains(e.target);
+    const clicouBtn = hamburgerBtn.contains(e.target);
+
+    if (!clicouMenu && !clicouBtn) {
+        mobileMenu.classList.remove("open");
+    }
+
+});
 
 <script>
 /* ══════════════════════════════════════════════
@@ -2182,60 +2187,124 @@ document.getElementById("btnIrEpisodio").addEventListener("click", () => {
 ══════════════════════════════════════════════ */
 let searchTimer = null;
 
-document.getElementById("searchInput").addEventListener("input", function () {
+["searchInput", "searchInputMobile"].forEach(id => {
+
+const input = document.getElementById(id);
+
+if (!input) return;
+
+input.addEventListener("input", function () {
+
     const q = this.value.trim();
-    const results = document.getElementById("searchResults");
+
+    const results =
+        id === "searchInputMobile"
+        ? document.getElementById("searchResultsMobile")
+        : document.getElementById("searchResults");
 
     clearTimeout(searchTimer);
 
-    if (!q) { results.classList.remove("open"); return; }
+    if (!q) {
+        results.classList.remove("open");
+        return;
+    }
 
     results.classList.add("open");
-    results.innerHTML = '<div class="search-loading">🔍 Buscando...</div>';
+
+    results.innerHTML =
+        '<div class="search-loading">🔍 Buscando...</div>';
 
     searchTimer = setTimeout(async () => {
+
         try {
+
             const r = await fetch(
                 `${TMDB_URL}/search/multi?api_key=${TMDB_KEY}&language=pt-BR&query=${encodeURIComponent(q)}`
             );
+
             const data = await r.json();
+
             const items = (data.results || [])
-                .filter(x => (x.media_type === "movie" || x.media_type === "tv") && x.poster_path)
-                .slice(0, 7);
+            .filter(x =>
+                (x.media_type === "movie" || x.media_type === "tv")
+                && x.poster_path
+            )
+            .slice(0, 7);
 
             if (!items.length) {
-                results.innerHTML = '<div class="search-empty">😕 Nenhum resultado encontrado</div>';
+
+                results.innerHTML =
+                '<div class="search-empty">😕 Nenhum resultado encontrado</div>';
+
                 return;
             }
 
             results.innerHTML = "";
+
             items.forEach(item => {
-                const tipo = item.media_type === "movie" ? "filme" : "serie";
+
+                const tipo =
+                    item.media_type === "movie"
+                    ? "filme"
+                    : "serie";
+
                 const titulo = item.title || item.name;
-                const ano = (item.release_date || item.first_air_date || "").slice(0, 4);
-                const nota = item.vote_average ? item.vote_average.toFixed(1) : "–";
+
+                const ano =
+                    (item.release_date || item.first_air_date || "")
+                    .slice(0, 4);
+
+                const nota =
+                    item.vote_average
+                    ? item.vote_average.toFixed(1)
+                    : "–";
 
                 const div = document.createElement("div");
+
                 div.className = "search-item";
+
                 div.innerHTML = `
-                    <div class="search-thumb" style="background-image:url('${IMG_W780}${item.poster_path}')"></div>
+                    <div class="search-thumb"
+                    style="background-image:url('${IMG_W780}${item.poster_path}')"></div>
+
                     <div class="search-info">
                         <div class="search-name">${titulo}</div>
-                        <div class="search-meta">⭐ ${nota} ${ano ? "· " + ano : ""}</div>
-                        <span class="search-type-badge">${tipo === "filme" ? "Filme" : "Série"}</span>
+
+                        <div class="search-meta">
+                            ⭐ ${nota} ${ano ? "· " + ano : ""}
+                        </div>
+
+                        <span class="search-type-badge">
+                            ${tipo === "filme" ? "Filme" : "Série"}
+                        </span>
                     </div>
                 `;
+
                 div.addEventListener("click", () => {
+
                     results.classList.remove("open");
-                    document.getElementById("searchInput").value = "";
+
+                    input.value = "";
+
                     abrirDetalhes(item, tipo);
+
                 });
+
                 results.appendChild(div);
+
             });
+
         } catch {
-            results.innerHTML = '<div class="search-empty">❌ Erro na busca</div>';
+
+            results.innerHTML =
+            '<div class="search-empty">❌ Erro na busca</div>';
+
         }
+
     }, 400);
+
+});
+
 });
 
 // Fecha ao clicar fora
