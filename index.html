@@ -26,6 +26,13 @@ body{
     font-family:'Poppins',sans-serif;
     overflow-x:hidden;
     min-height:100vh;
+    width:100%;
+    max-width:100%;
+}
+
+html, body{
+    width:100%;
+    max-width:100%;
 }
 
 html{scroll-behavior:smooth;}
@@ -371,6 +378,7 @@ body::-webkit-scrollbar{
     position:absolute;
     inset:0;
     width:100%;
+    max-width:100%;
 
     opacity:0;
     visibility:hidden;
@@ -396,7 +404,11 @@ body::-webkit-scrollbar{
 /* ══════════════════════════════════
    CATEGORIAS
 ══════════════════════════════════ */
-.category{padding:10px 60px 30px;}
+.category{
+    padding:10px 0 30px;
+    width:100%;
+}
+
 .category-header{
     display:flex;
     align-items:center;
