@@ -2341,6 +2341,79 @@ if (scrollAtual >= alturaTotal - 1000) {
 });
 
 carregarInicio();
+
+/* ══════════════════════════════════════════════
+   MOBILE MENU
+══════════════════════════════════════════════ */
+
+// MENU HAMBURGUER
+const hamburgerBtn = document.getElementById("hamburgerBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+hamburgerBtn.addEventListener("click", () => {
+
+    mobileMenu.classList.toggle("open");
+
+});
+
+// BUSCA MOBILE
+const openSearch = document.getElementById("openSearch");
+const mobileSearch = document.getElementById("mobileSearch");
+
+openSearch.addEventListener("click", () => {
+
+    mobileSearch.classList.toggle("open");
+
+});
+
+// LINKS MOBILE
+document.querySelectorAll(".mobile-menu a").forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        // navega
+        irPara(link.dataset.page);
+
+        // fecha menu
+        mobileMenu.classList.remove("open");
+
+        // ativa botão
+        document.querySelectorAll(".mobile-menu a")
+        .forEach(a => a.classList.remove("active"));
+
+        link.classList.add("active");
+
+    });
+
+});
+
+// LOGO MOBILE
+document.getElementById("mobileLogo")
+.addEventListener("click", () => {
+
+    irPara("inicio");
+
+    mobileMenu.classList.remove("open");
+
+});
+
+// FECHAR MENU CLICANDO FORA
+document.addEventListener("click", (e) => {
+
+    const clicouNoMenu =
+        e.target.closest(".mobile-menu");
+
+    const clicouNoBotao =
+        e.target.closest(".hamburger");
+
+    if (!clicouNoMenu && !clicouNoBotao) {
+
+        mobileMenu.classList.remove("open");
+
+    }
+
+});
+
 </script>
 </body>
 </html>
