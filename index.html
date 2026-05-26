@@ -39,10 +39,13 @@ html{scroll-behavior:smooth;}
 a{text-decoration:none;color:inherit;cursor:pointer;}
 button{border:none;outline:none;cursor:pointer;font-family:'Poppins',sans-serif;}
 
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar{width:4px;height:4px;}
-::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:#333;border-radius:4px;}
+::-webkit-scrollbar-track{
+    background:#111;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#2d2d2d;
+}
 
 /* ══════════════════════════════════
    NAVBAR
@@ -491,8 +494,38 @@ button{border:none;outline:none;cursor:pointer;font-family:'Poppins',sans-serif;
     cursor:grabbing;
 }
 
-.movie-row::-webkit-scrollbar{
-    height:3px;
+/* MOBILE/TABLET = scrollbar fina */
+::-webkit-scrollbar{
+    width:4px;
+    height:4px;
+}
+
+::-webkit-scrollbar-track{
+    background:transparent;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#333;
+    border-radius:4px;
+}
+
+/* DESKTOP = scrollbar maior */
+@media screen and (min-width:901px){
+
+    ::-webkit-scrollbar{
+        width:12px;
+        height:12px;
+    }
+
+    ::-webkit-scrollbar-thumb{
+        background:#444;
+        border-radius:10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover{
+        background:#666;
+    }
+
 }
 
 .movie-row.dragging{
@@ -506,7 +539,7 @@ button{border:none;outline:none;cursor:pointer;font-family:'Poppins',sans-serif;
 
     transform:translateZ(0);
     backface-visibility:hidden;
-
+    will-change: transform;
     position:relative;
     min-width:var(--card-w);
     height:var(--card-h);
@@ -521,9 +554,13 @@ button{border:none;outline:none;cursor:pointer;font-family:'Poppins',sans-serif;
     flex-shrink:0;
 }
 .movie-card:hover{
-    transform:scale(1.07) translateY(-4px);
-    box-shadow:0 20px 40px rgba(0,0,0,0.7);
-    z-index:10;
+
+transform:scale(1.03);
+
+box-shadow:0 8px 20px rgba(0,0,0,0.35);
+
+z-index:5;
+
 }
 .card-overlay{
     position:absolute;inset:0;
@@ -596,7 +633,6 @@ button{border:none;outline:none;cursor:pointer;font-family:'Poppins',sans-serif;
     align-items:center;
     z-index:99000;
     padding:20px;
-    backdrop-filter:blur(6px);
 }
 .details-modal.open{display:flex;}
 .details-content{
@@ -626,10 +662,18 @@ button{border:none;outline:none;cursor:pointer;font-family:'Poppins',sans-serif;
 }
 .details-close:hover{background:var(--red);}
 .details-banner{
-    width:100%;height:280px;
+    width:100%;
+    height:280px;
+
     background-size:cover;
     background-position:center;
+
     position:relative;
+
+    opacity:1;
+    transition:opacity .25s ease;
+
+    background-color:#111;
 }
 .details-banner::after{
     content:"";
@@ -910,80 +954,6 @@ button{border:none;outline:none;cursor:pointer;font-family:'Poppins',sans-serif;
 }
 
 /* ══════════════════════════════════
-   AVISO ADBLOCK
-══════════════════════════════════ */
-.adblock-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.92);
-    z-index:9999999;
-    display:none;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
-    backdrop-filter:blur(8px);
-}
-
-.adblock-box{
-    width:100%;
-    max-width:500px;
-    background:#181818;
-    border:1px solid #2a2a2a;
-    border-radius:18px;
-    padding:35px;
-    text-align:center;
-    box-shadow:0 20px 60px rgba(0,0,0,0.7);
-}
-
-.adblock-box h2{
-    font-size:30px;
-    margin-bottom:14px;
-    color:#E50914;
-    font-family:'Bebas Neue',sans-serif;
-    letter-spacing:1px;
-}
-
-.adblock-box p{
-    color:#bbb;
-    line-height:1.7;
-    margin-bottom:25px;
-    font-size:14px;
-}
-
-.adblock-buttons{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-}
-
-.adblock-btn{
-    padding:14px;
-    border-radius:10px;
-    font-weight:600;
-    font-size:14px;
-    transition:0.2s;
-}
-
-.adblock-primary{
-    background:#E50914;
-    color:white;
-}
-
-.adblock-primary:hover{
-    background:#ff2020;
-}
-
-.adblock-secondary{
-    background:#2a2a2a;
-    color:#ccc;
-}
-
-.adblock-secondary:hover{
-    background:#3a3a3a;
-    color:white;
-}
-
-/* ══════════════════════════════════
    MOBILE NAVBAR
 ══════════════════════════════════ */
 
@@ -1165,6 +1135,128 @@ button{border:none;outline:none;cursor:pointer;font-family:'Poppins',sans-serif;
 .logo{
     font-size:34px;
 }
+
+}
+
+/* ══════════════════════════════════
+   AVISO NAVEGADOR
+══════════════════════════════════ */
+
+.browser-warning{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.88);
+    backdrop-filter:blur(8px);
+    z-index:999999999;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+}
+
+.browser-warning.hidden{
+    display:none;
+}
+
+.browser-box{
+    width:100%;
+    max-width:520px;
+
+    background:#111;
+    border:1px solid rgba(255,255,255,0.08);
+
+    border-radius:24px;
+
+    padding:30px;
+
+    text-align:center;
+
+    box-shadow:0 20px 80px rgba(0,0,0,0.8);
+
+    animation:browserPopup .35s ease;
+}
+
+@keyframes browserPopup{
+
+    from{
+        opacity:0;
+        transform:scale(.9) translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1) translateY(0);
+    }
+
+}
+
+.browser-icon{
+    font-size:70px;
+    margin-bottom:18px;
+}
+
+.browser-box h2{
+    font-size:28px;
+    margin-bottom:12px;
+    font-weight:700;
+}
+
+.browser-box p{
+    color:#aaa;
+    font-size:15px;
+    line-height:1.7;
+    margin-bottom:26px;
+}
+
+.browser-buttons{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.browser-btn{
+    width:100%;
+    padding:15px 18px;
+
+    border-radius:14px;
+
+    font-size:15px;
+    font-weight:600;
+
+}
+
+.browser-btn.youtube{
+    background:#ff0000;
+    color:white;
+}
+
+.browser-btn.download{
+    background:#E50914;
+    color:white;
+}
+
+.browser-btn.skip{
+    background:#1f1f1f;
+    color:#bbb;
+    border:1px solid #333;
+}
+
+@media screen and (max-width:600px){
+
+    .browser-box{
+        padding:24px 18px;
+        border-radius:20px;
+    }
+
+    .browser-box h2{
+        font-size:22px;
+    }
+
+    .browser-box p{
+        font-size:14px;
+    }
 
 }
 
@@ -1414,43 +1506,66 @@ button{border:none;outline:none;cursor:pointer;font-family:'Poppins',sans-serif;
     </div>
 </div>
 
-<!-- AVISO ADBLOCK -->
-<div class="adblock-overlay" id="adblockOverlay">
-    <div class="adblock-box">
+<!-- ════════════ AVISO NAVEGADOR ════════════ -->
+<div class="browser-warning" id="browserWarning">
 
-        <h2>⚠ USE ADBLOCK</h2>
+    <div class="browser-box">
 
-        <p>
-            Detectamos que você está usando Google Chrome sem bloqueador de anúncios.
+        <div class="browser-icon">
+            🛡️
+        </div>
 
-            <br><br>
+        <h2 id="browserTitle">
+            Proteja-se dos anúncios
+        </h2>
 
-            Recomendamos:
-
-            🦁 Brave Browser ou 🛡️ Ublock Origin — ajudam a bloquear anúncios invasivos e proporcionam uma experiência de navegação mais fluida e agradável no site.
+        <p id="browserText">
+            Para bloquear anúncios e melhorar sua experiência no OFFFLIX,
+            recomendamos usar o navegador Adblock Browser.
         </p>
 
-        <div class="adblock-buttons">
+        <div class="browser-buttons">
 
-            <button class="adblock-btn adblock-primary"
-                onclick="window.open('https://brave.com/pt-br/download/', '_blank')">
-                🦁 Baixar Brave
+            <!-- YOUTUBE -->
+            <button
+                class="browser-btn youtube"
+                onclick="window.open('SEU_LINK_YOUTUBE', '_blank')"
+            >
+                ▶ Como usar o navegador
             </button>
 
-            <button class="adblock-btn adblock-primary"
-                onclick="window.open('https://ublockorigin.com/', '_blank')">
-                🛡️ Instalar Ublock Origin
+            <!-- PC -->
+            <button
+                class="browser-btn download"
+                id="desktopDownloadBtn"
+                onclick="window.open('https://adblockbrowser.org/', '_blank')"
+            >
+                💻 Baixar para Computador
             </button>
 
-            <button class="adblock-btn adblock-secondary"
-                id="continuarSemProtecao">
-                Continuar sem proteção
+            <!-- MOBILE -->
+            <button
+                class="browser-btn download"
+                id="mobileDownloadBtn"
+                onclick="window.open('https://play.google.com/store/apps/details?id=org.adblockplus.browser&hl=pt_BR', '_blank')"
+            >
+                📱 Baixar na Play Store
+            </button>
+
+            <!-- CONTINUAR -->
+            <button
+                class="browser-btn skip"
+                id="continueWithoutBtn"
+            >
+                Continuar Sem Proteção
             </button>
 
         </div>
 
     </div>
+
 </div>
+
 <script>
 /* ══════════════════════════════════════════════
    CONFIG
@@ -1465,6 +1580,10 @@ let bannerIdx    = 0;
 let bannerTimer  = null;
 let imdbAtual    = "";
 let tmdbAtual    = "";
+
+// CACHE IMDb
+const imdbCache = {};
+
 let tipoAtual    = "filme";
 let tempAtual    = 1;
 let epAtual      = 1;
@@ -1595,80 +1714,6 @@ function preencherRow(rowId, items, tipo) {
         const c = criarCard(item, tipo);
         if (c) row.appendChild(c);
     });
-    function enableDrag(el) {
-
-// MOBILE → usa scroll nativo
-if (window.innerWidth <= 900) {
-
-    el.style.scrollBehavior = "smooth";
-
-    return;
-}
-
-// DESKTOP DRAG
-let isDown = false;
-let startX = 0;
-let scrollLeft = 0;
-let moved = false;
-
-el.addEventListener("mousedown", (e) => {
-
-    isDown = true;
-    moved = false;
-
-    startX = e.pageX;
-    scrollLeft = el.scrollLeft;
-
-    el.classList.add("dragging");
-
-});
-
-window.addEventListener("mouseup", () => {
-
-    isDown = false;
-
-    setTimeout(() => {
-        moved = false;
-        el.classList.remove("dragging");
-    }, 50);
-
-});
-
-el.addEventListener("mousemove", (e) => {
-
-    if (!isDown) return;
-
-    const distance = e.pageX - startX;
-
-    if (Math.abs(distance) > 5) {
-        moved = true;
-    }
-
-    if (moved) {
-
-        e.preventDefault();
-
-        requestAnimationFrame(() => {
-            el.scrollLeft = scrollLeft - distance;
-        });
-
-    }
-
-});
-
-// bloqueia clique se arrastou
-el.addEventListener("click", (e) => {
-
-    if (moved) {
-
-        e.preventDefault();
-        e.stopPropagation();
-
-    }
-
-}, true);
-
-}
 }
 
 function preencherGrid(gridId, items, tipo) {
@@ -2027,58 +2072,95 @@ function renderLista() {
    MODAL DETALHES
 ══════════════════════════════════════════════ */
 async function abrirDetalhes(item, tipo) {
-    const modal = document.getElementById("detailsModal");
-    modal.classList.add("open");
 
-    imdbAtual = "";
-    tmdbAtual = item.id;
-    tipoAtual = tipo;
-    tempAtual = 1; epAtual = 1;
+const modal = document.getElementById("detailsModal");
+const banner = document.getElementById("detailsBanner");
 
-    document.getElementById("detailsBanner").style.backgroundImage =
-        `url('${IMG_ORIG}${item.backdrop_path || item.poster_path}')`;
-    document.getElementById("detailsTitle").textContent = item.title || item.name;
-    document.getElementById("detailsYear").textContent =
-        (item.release_date || item.first_air_date || "").slice(0, 4);
-    document.getElementById("detailsRating").textContent =
-        `⭐ ${(item.vote_average || 0).toFixed(1)}`;
-    document.getElementById("detailsTipo").textContent =
-        tipo === "filme" ? "Filme" : "Série";
-    document.getElementById("detailsDescription").textContent =
-        item.overview || "Sem descrição disponível.";
+const imgUrl =
+`${IMG_ORIG}${item.backdrop_path || item.poster_path}`;
 
-    // Gêneros
-    const genreNames = {
-        28:"Ação",12:"Aventura",16:"Animação",35:"Comédia",80:"Crime",
-        18:"Drama",14:"Fantasia",27:"Terror",10749:"Romance",878:"Ficção Científica",
-        53:"Thriller",10752:"Guerra",37:"Faroeste",10759:"Ação & Aventura",
-        10762:"Kids",9648:"Mistério",10763:"Notícias",10764:"Reality",
-        10765:"Sci-Fi & Fantasy",10766:"Novela",10767:"Talk Show",10768:"War & Politics"
-    };
-    const genresEl = document.getElementById("detailsGenres");
-    genresEl.innerHTML = "";
-    (item.genre_ids || []).slice(0, 4).forEach(id => {
-        if (genreNames[id]) {
-            const tag = document.createElement("span");
-            tag.className = "genre-tag";
-            tag.textContent = genreNames[id];
-            genresEl.appendChild(tag);
-        }
-    });
+// ABRE O MODAL IMEDIATAMENTE
+modal.classList.add("open");
 
-    // Botão lista
-    const naLista = minhaLista.some(x => x.id === item.id);
-    const dlBtn = document.getElementById("detailsList");
-    dlBtn.textContent = naLista ? "✓ Na Lista" : "+ Minha Lista";
-    dlBtn.onclick = () => toggleLista(item, tipo, null);
+// coloca imagem depois
+banner.style.backgroundImage = `url('${imgUrl}')`;
 
-    document.getElementById("detailsWatch").onclick = () => {
-        modal.classList.remove("open");
-        abrirPlayer(item.title || item.name, item, tipo);
-    };
+imdbAtual = "";
+tmdbAtual = item.id;
+tipoAtual = tipo;
+tempAtual = 1;
+epAtual = 1;
 
-    // Busca IMDb em background
-    getImdb(item.id, tipo).then(id => { imdbAtual = id; });
+document.getElementById("detailsTitle").textContent =
+    item.title || item.name;
+
+document.getElementById("detailsYear").textContent =
+    (item.release_date || item.first_air_date || "").slice(0, 4);
+
+document.getElementById("detailsRating").textContent =
+    `⭐ ${(item.vote_average || 0).toFixed(1)}`;
+
+document.getElementById("detailsTipo").textContent =
+    tipo === "filme" ? "Filme" : "Série";
+
+document.getElementById("detailsDescription").textContent =
+    item.overview || "Sem descrição disponível.";
+
+// gêneros
+const genreNames = {
+    28:"Ação",12:"Aventura",16:"Animação",35:"Comédia",
+    80:"Crime",18:"Drama",14:"Fantasia",27:"Terror",
+    10749:"Romance",878:"Ficção Científica",53:"Thriller",
+    10752:"Guerra",37:"Faroeste",10759:"Ação & Aventura",
+    10762:"Kids",9648:"Mistério",10763:"Notícias",
+    10764:"Reality",10765:"Sci-Fi & Fantasy",
+    10766:"Novela",10767:"Talk Show",10768:"War & Politics"
+};
+
+const genresEl = document.getElementById("detailsGenres");
+
+genresEl.innerHTML = "";
+
+(item.genre_ids || []).slice(0, 4).forEach(id => {
+
+    if (genreNames[id]) {
+
+        const tag = document.createElement("span");
+
+        tag.className = "genre-tag";
+
+        tag.textContent = genreNames[id];
+
+        genresEl.appendChild(tag);
+
+    }
+
+});
+
+// botão lista
+const naLista = minhaLista.some(x => x.id === item.id);
+
+const dlBtn = document.getElementById("detailsList");
+
+dlBtn.textContent =
+    naLista ? "✓ Na Lista" : "+ Minha Lista";
+
+dlBtn.onclick = () =>
+    toggleLista(item, tipo, null);
+
+document.getElementById("detailsWatch").onclick = () => {
+
+    modal.classList.remove("open");
+
+    abrirPlayer(item.title || item.name, item, tipo);
+
+};
+
+// IMDb em background
+getImdb(item.id, tipo).then(id => {
+    imdbAtual = id;
+});
+
 }
 
 async function abrirDetalhesERodar(item, tipo) {
@@ -2403,54 +2485,6 @@ document.addEventListener("click", e => {
     }
 });
 
-
-/* ══════════════════════════════════════════════
-   PRELOAD IMAGENS
-══════════════════════════════════════════════ */
-function preloadImage(url){
-    if(!url) return;
-    const img = new Image();
-    img.src = url;
-}
-
-/* ══════════════════════════════════════════════
-   INIT
-══════════════════════════════════════════════ */
-
-/* ══════════════════════════════════════════════
-   DETECÇÃO BRAVE / CHROME
-══════════════════════════════════════════════ */
-
-async function verificarNavegador() {
-
-const overlay = document.getElementById("adblockOverlay");
-
-// Detecta Brave
-const isBrave = navigator.brave && await navigator.brave.isBrave();
-
-// Detecta Chrome comum
-const isChrome = /Chrome/.test(navigator.userAgent) &&
-                 /Google Inc/.test(navigator.vendor);
-
-// Brave = acesso liberado
-if (isBrave) {
-    overlay.style.display = "none";
-    return;
-}
-
-// Chrome comum = mostra aviso
-if (isChrome) {
-    overlay.style.display = "flex";
-}
-}
-
-// botão continuar sem proteção
-document.getElementById("continuarSemProtecao").addEventListener("click", () => {
-document.getElementById("adblockOverlay").style.display = "none";
-});
-
-verificarNavegador();
-
 /* ════════════════════════════════════════
    SCROLL INFINITO NAS PÁGINAS
 ════════════════════════════════════════ */
@@ -2563,6 +2597,95 @@ if (!clicouNoMenu && !clicouNoBotao) {
 }
 
 });
+
+/* ══════════════════════════════════════════════
+   PRELOAD IMAGENS
+══════════════════════════════════════════════ */
+function preloadImage(url){
+    if(!url) return;
+    const img = new Image();
+    img.src = url;
+}
+
+/* ══════════════════════════════════════════════
+   AVISO NAVEGADOR
+══════════════════════════════════════════════ */
+
+const browserWarning =
+document.getElementById("browserWarning");
+
+const desktopBtn =
+document.getElementById("desktopDownloadBtn");
+
+const mobileBtn =
+document.getElementById("mobileDownloadBtn");
+
+const continueBtn =
+document.getElementById("continueWithoutBtn");
+
+// detecta dispositivo
+const isMobile =
+/Android|iPhone|iPad|iPod|Opera Mini|IEMobile|Mobile/i
+.test(navigator.userAgent);
+
+// mostra somente botão correto
+if (isMobile) {
+
+    desktopBtn.style.display = "none";
+
+} else {
+
+    mobileBtn.style.display = "none";
+
+}
+
+// botão continuar
+continueBtn.addEventListener("click", () => {
+
+    browserWarning.classList.add("hidden");
+
+});
+
+// impede scroll atrás do popup
+document.body.style.overflow = "hidden";
+
+// libera scroll ao fechar
+continueBtn.addEventListener("click", () => {
+
+    document.body.style.overflow = "auto";
+
+});
+
+continueBtn.addEventListener("click", () => {
+
+    localStorage.setItem(
+        "offflix_browser_warning",
+        "true"
+    );
+
+});
+
+// contador de recargas
+let warningReloads =
+parseInt(localStorage.getItem("offflix_warning_reload_count")) || 0;
+
+// soma +1 a cada recarregamento
+warningReloads++;
+
+// salva novo valor
+localStorage.setItem(
+    "offflix_warning_reload_count",
+    warningReloads
+);
+
+// mostra aviso a cada 3 recargas
+if (warningReloads % 3 !== 0) {
+
+    browserWarning.classList.add("hidden");
+
+    document.body.style.overflow = "auto";
+
+}
 
 </script>
 </body>
