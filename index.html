@@ -209,16 +209,34 @@ button{border:none;outline:none;cursor:pointer;font-family:'Poppins',sans-serif;
 /* ══════════════════════════════════
    BANNER
 ══════════════════════════════════ */
+
+@media screen and (max-width:900px){
+
+.banner{
+    padding-top:70px;
+}
+
+}
+
 .banner{
     position:relative;
-    height:100vh;
+    min-height:100svh;
+    padding-top:70px;
     overflow:hidden;
 }
 .banner-bg{
-    position:absolute;inset:0;
+    position:absolute;
+    inset:0;
+
     background-size:cover;
     background-position:center top;
+    background-repeat:no-repeat;
+
+    background-color:#111;
+
     transition:opacity 0.8s ease;
+
+    will-change:transform;
 }
 .banner-bg::after{
     content:"";
@@ -987,7 +1005,7 @@ button{border:none;outline:none;cursor:pointer;font-family:'Poppins',sans-serif;
     top:0;
     left:0;
     width:100%;
-    z-index:99999;
+    z-index:9000;
 
     background:rgba(10,10,10,0.96);
     backdrop-filter:blur(10px);
@@ -1440,7 +1458,7 @@ button{border:none;outline:none;cursor:pointer;font-family:'Poppins',sans-serif;
 const TMDB_KEY   = "2b7796e67099dd3d425b295146f38ee2";
 const TMDB_URL   = "https://api.themoviedb.org/3";
 const IMG_W780   = "https://image.tmdb.org/t/p/w780";
-const IMG_ORIG   = "https://image.tmdb.org/t/p/original";
+const IMG_ORIG = "https://image.tmdb.org/t/p/w780";
 
 let bannerMovies = [];
 let bannerIdx    = 0;
@@ -1732,8 +1750,13 @@ el.addEventListener("click", (e) => {
    BANNER
 ══════════════════════════════════════════════ */
 function renderBanner(movie) {
-    document.getElementById("bannerBg").style.backgroundImage =
-        `url('${IMG_ORIG}${movie.backdrop_path || movie.poster_path}')`;
+    const bgUrl =
+`${IMG_ORIG}${movie.backdrop_path || movie.poster_path}`;
+
+preloadImage(bgUrl);
+
+document.getElementById("bannerBg").style.backgroundImage =
+`url('${bgUrl}')`;
     document.getElementById("bannerTitle").textContent = movie.title || movie.name;
     document.getElementById("bannerDescription").textContent = movie.overview || "";
     document.getElementById("bannerYear").textContent =
@@ -1853,6 +1876,13 @@ async function carregarInicio() {
     preencherRow("topRow",    topData.slice(0, 20),    "filme");
 
 }
+
+// preload das próximas imagens
+bannerMovies.slice(0,5).forEach(movie => {
+    preloadImage(
+        `${IMG_ORIG}${movie.backdrop_path || movie.poster_path}`
+    );
+});
 
 async function carregarGrid(tipo) {
     if (tipo === "filmes") {
