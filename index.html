@@ -2665,6 +2665,9 @@ continueBtn.addEventListener("click", () => {
 
 });
 
+// verifica se é a primeira vez que abriu o site
+let firstVisit = localStorage.getItem("offflix_first_visit");
+
 // contador de recargas
 let warningReloads =
 parseInt(localStorage.getItem("offflix_warning_reload_count")) || 0;
@@ -2678,8 +2681,14 @@ localStorage.setItem(
     warningReloads
 );
 
-// mostra aviso a cada 3 recargas
-if (warningReloads % 3 !== 0) {
+// PRIMEIRA VEZ → mostra o aviso
+if (!firstVisit) {
+
+    localStorage.setItem("offflix_first_visit", "true");
+
+}
+// DEPOIS → mantém regra de mostrar a cada 3 recargas
+else if (warningReloads % 3 !== 0) {
 
     browserWarning.classList.add("hidden");
 
