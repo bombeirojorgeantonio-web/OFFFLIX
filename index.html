@@ -2623,7 +2623,91 @@ document.getElementById("mobileDownloadBtn");
 const continueBtn =
 document.getElementById("continueWithoutBtn");
 
-// detecta dispositivo
+// =====================================
+// CONFIG
+// =====================================
+
+// código secreto
+const OFFFLIX_CODE = "OFFFLIX2026";
+
+// =====================================
+// CRIA INPUT DO CÓDIGO
+// =====================================
+
+const browserButtons =
+document.querySelector(".browser-buttons");
+
+// campo input
+const codeInput =
+document.createElement("input");
+
+codeInput.type = "text";
+
+codeInput.placeholder =
+"Digite o código de ativação";
+
+codeInput.className =
+"offflix-code-input";
+
+// botão ativar
+const activateBtn =
+document.createElement("button");
+
+activateBtn.textContent =
+"Ativar Código";
+
+activateBtn.className =
+"browser-btn download";
+
+// adiciona no popup
+browserButtons.prepend(activateBtn);
+browserButtons.prepend(codeInput);
+
+// =====================================
+// ESTILO INPUT
+// =====================================
+
+const style =
+document.createElement("style");
+
+style.innerHTML = `
+.offflix-code-input{
+
+    width:100%;
+
+    padding:15px;
+
+    border-radius:14px;
+
+    border:1px solid #333;
+
+    background:#1a1a1a;
+
+    color:white;
+
+    font-size:15px;
+
+    margin-bottom:12px;
+
+    outline:none;
+
+    transition:0.2s;
+
+}
+
+.offflix-code-input:focus{
+
+    border-color:#E50914;
+
+}
+`;
+
+document.head.appendChild(style);
+
+// =====================================
+// DETECTA DISPOSITIVO
+// =====================================
+
 const isMobile =
 /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|Mobile/i
 .test(navigator.userAgent);
@@ -2639,62 +2723,79 @@ if (isMobile) {
 
 }
 
-// botão continuar
-continueBtn.addEventListener("click", () => {
+// =====================================
+// VERIFICA SE JÁ ATIVOU O CÓDIGO
+// =====================================
 
-    browserWarning.classList.add("hidden");
-
-});
-
-// impede scroll atrás do popup
-document.body.style.overflow = "hidden";
-
-// libera scroll ao fechar
-continueBtn.addEventListener("click", () => {
-
-    document.body.style.overflow = "auto";
-
-});
-
-continueBtn.addEventListener("click", () => {
-
-    localStorage.setItem(
-        "offflix_browser_warning",
-        "true"
-    );
-
-});
-
-// verifica se é a primeira vez que abriu o site
-let firstVisit = localStorage.getItem("offflix_first_visit");
-
-// contador de recargas
-let warningReloads =
-parseInt(localStorage.getItem("offflix_warning_reload_count")) || 0;
-
-// soma +1 a cada recarregamento
-warningReloads++;
-
-// salva novo valor
-localStorage.setItem(
-    "offflix_warning_reload_count",
-    warningReloads
+const warningDisabled =
+localStorage.getItem(
+"offflix_warning_disabled"
 );
 
-// PRIMEIRA VEZ → mostra o aviso
-if (!firstVisit) {
-
-    localStorage.setItem("offflix_first_visit", "true");
-
-}
-// DEPOIS → mantém regra de mostrar a cada 3 recargas
-else if (warningReloads % 3 !== 0) {
+// se ativou código → não mostra aviso
+if (warningDisabled === "true") {
 
     browserWarning.classList.add("hidden");
 
     document.body.style.overflow = "auto";
 
 }
+
+// se NÃO ativou → mostra aviso
+else {
+
+    browserWarning.classList.remove("hidden");
+
+    document.body.style.overflow = "hidden";
+
+}
+
+// =====================================
+// BOTÃO CONTINUAR
+// =====================================
+
+continueBtn.addEventListener("click", () => {
+
+    browserWarning.classList.add("hidden");
+
+    document.body.style.overflow = "auto";
+
+});
+
+// =====================================
+// ATIVAR CÓDIGO
+// =====================================
+
+activateBtn.addEventListener("click", () => {
+
+    const code =
+    codeInput.value.trim();
+
+    // código correto
+    if (code === OFFFLIX_CODE) {
+
+        // salva permanentemente
+        localStorage.setItem(
+            "offflix_warning_disabled",
+            "true"
+        );
+
+        browserWarning.classList.add("hidden");
+
+        document.body.style.overflow = "auto";
+
+        alert("Código ativado com sucesso!");
+
+    }
+
+    // código errado
+    else {
+
+        alert("Código inválido!");
+
+    }
+
+});
 
 </script>
 </body>
