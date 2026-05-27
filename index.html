@@ -798,10 +798,32 @@ z-index:5;
 }
 #btnIrEpisodio:hover{background:#ff2020;}
 
-.player-frame{
-    width:100%;height:80vh;
-    border:none;border-radius:12px;
+.player-zoom-area{
+    width:100%;
+    height:80vh;
+
+    overflow:hidden;
+
+    position:relative;
+
     background:#000;
+
+    border-radius:12px;
+
+    touch-action:none;
+}
+
+.player-frame{
+    width:100%;
+    height:100%;
+
+    border:none;
+
+    background:#000;
+
+    transform-origin:center center;
+
+    transition:transform 0.15s ease;
 }
 
 /* ══════════════════════════════════
@@ -1260,22 +1282,6 @@ z-index:5;
 
 }
 
-/* ZOOM NO PLAYER */
-
-.player-zoom{
-
-width:100%;
-
-overflow:auto;
-
-touch-action:pan-x pan-y pinch-zoom;
-
--webkit-overflow-scrolling:touch;
-
-background:#000;
-
-}
-
 </style>
 </head>
 <body>
@@ -1506,6 +1512,19 @@ background:#000;
         <div class="player-top">
             <div class="player-title-text" id="playerTitle">Carregando...</div>
             <div class="player-controls">
+
+                <button class="server-btn" id="zoomOutBtn">
+                    ➖
+                </button>
+                
+                <button class="server-btn" id="zoomResetBtn">
+                    🔄
+                </button>
+                
+                <button class="server-btn" id="zoomInBtn">
+                    ➕
+                </button>
+                
                 <button class="server-btn active" data-server="1">Player 1</button>
                 
                 
@@ -1521,16 +1540,18 @@ background:#000;
             <input type="number" id="inputEpisodio" value="1" min="1">
             <button id="btnIrEpisodio">▶ Ir</button>
         </div>
-        <div class="player-zoom">
+        <div class="player-zoom-area" id="playerZoomArea">
 
             <iframe
             class="player-frame"
-        id="playerFrame"
-        frameborder="0"
-        scrolling="no"
-        allowfullscreen
-        allow="autoplay; fullscreen">
-    </iframe>
+            id="playerFrame"
+            frameborder="0"
+            scrolling="no"
+            allowfullscreen
+            allow="autoplay; fullscreen">
+            </iframe>
+        
+        </div>
     </div>
 </div>
 
@@ -2919,6 +2940,60 @@ activateBtn.addEventListener("click", () => {
         alert("Código inválido!");
 
     }
+
+});
+
+/* ═══════════════════════════════════════
+   ZOOM MANUAL PLAYER
+═══════════════════════════════════════ */
+
+const playerFrame =
+document.getElementById("playerFrame");
+
+let zoomLevel = 1;
+
+function aplicarZoom(){
+
+    playerFrame.style.transform =
+    `scale(${zoomLevel})`;
+
+}
+
+// botão +
+document.getElementById("zoomInBtn")
+.addEventListener("click", () => {
+
+    zoomLevel += 0.1;
+
+    if(zoomLevel > 3){
+        zoomLevel = 3;
+    }
+
+    aplicarZoom();
+
+});
+
+// botão -
+document.getElementById("zoomOutBtn")
+.addEventListener("click", () => {
+
+    zoomLevel -= 0.1;
+
+    if(zoomLevel < 1){
+        zoomLevel = 1;
+    }
+
+    aplicarZoom();
+
+});
+
+// reset
+document.getElementById("zoomResetBtn")
+.addEventListener("click", () => {
+
+    zoomLevel = 1;
+
+    aplicarZoom();
 
 });
 
