@@ -799,8 +799,13 @@ z-index:5;
 #btnIrEpisodio:hover{background:#ff2020;}
 
 .player-frame{
-    width:100%;height:80vh;
-    border:none;border-radius:12px;
+    width:100%;
+    height:85vh;
+
+    border:none;
+
+    border-radius:12px;
+
     background:#000;
 }
 
@@ -938,9 +943,9 @@ z-index:5;
     }
 
     .player-frame{
-        height:55vh;
-    }
-
+    height:100vh;
+    border-radius:0;
+}
     .category{
     padding-left:0;
     padding-right:0;
@@ -1260,6 +1265,52 @@ z-index:5;
 
 }
 
+/* FULLSCREEN MOBILE/TABLET */
+
+@media screen and (max-width:900px){
+
+.player-modal{
+
+    padding:0 !important;
+
+    background:#000;
+
+}
+
+.player-container{
+
+    width:100vw !important;
+    height:100vh !important;
+
+    max-width:none !important;
+
+    border-radius:0 !important;
+
+    padding:0 !important;
+
+    background:#000;
+
+}
+
+.player-top{
+
+    padding:10px;
+
+    border-radius:0;
+
+}
+
+.player-frame{
+
+    width:100vw !important;
+    height:100vh !important;
+
+    border-radius:0 !important;
+
+}
+
+}
+
 </style>
 </head>
 <body>
@@ -1364,6 +1415,16 @@ z-index:5;
         </div>
         <div class="banner-dots" id="bannerDots"></div>
     </section>
+
+<!-- CONTINUAR ASSISTINDO -->
+<section class="category" id="continuarAssistindoSection" style="display:none;">
+    <div class="category-header">
+        <h2>▶️ Continuar Assistindo</h2>
+        <div class="cat-line"></div>
+    </div>
+
+    <div class="movie-row" id="continuarAssistindoRow"></div>
+</section>
 
     <!-- FILMES POPULARES -->
     <section class="category">
@@ -1589,7 +1650,12 @@ let tempAtual    = 1;
 let epAtual      = 1;
 
 let itemAtual    = null;
-let minhaLista   = JSON.parse(localStorage.getItem("offflix_lista") || "[]");
+
+let minhaLista =
+JSON.parse(localStorage.getItem("offflix_lista") || "[]");
+
+let continuarAssistindo =
+JSON.parse(localStorage.getItem("offflix_continue") || "[]");
 
 /* ══════════════════════════════════════════════
    FETCH HELPERS
@@ -2030,6 +2096,93 @@ function salvarLista() {
     localStorage.setItem("offflix_lista", JSON.stringify(minhaLista));
 }
 
+/* ══════════════════════════════════════════════
+   CONTINUAR ASSISTINDO
+══════════════════════════════════════════════ */
+
+function salvarContinuarAssistindo() {
+
+localStorage.setItem(
+    "offflix_continue",
+    JSON.stringify(continuarAssistindo)
+);
+
+}
+
+function adicionarContinuarAssistindo(item, tipo) {
+
+if (!item) return;
+
+// remove se já existir
+continuarAssistindo =
+continuarAssistindo.filter(x => x.id !== item.id);
+
+// adiciona no início
+continuarAssistindo.unshift({
+    ...item,
+    _tipo: tipo
+});
+
+// limite 20
+if (continuarAssistindo.length > 20) {
+
+    continuarAssistindo =
+    continuarAssistindo.slice(0, 20);
+
+}
+
+salvarContinuarAssistindo();
+
+renderContinuarAssistindo();
+
+}
+
+function renderContinuarAssistindo() {
+
+const row =
+document.getElementById(
+    "continuarAssistindoRow"
+);
+
+const section =
+document.getElementById(
+    "continuarAssistindoSection"
+);
+
+if (!row || !section) return;
+
+row.innerHTML = "";
+
+// sem itens
+if (!continuarAssistindo.length) {
+
+    section.style.display = "none";
+
+    return;
+
+}
+
+// mostra seção
+section.style.display = "block";
+
+continuarAssistindo.forEach(item => {
+
+    const card =
+    criarCard(
+        item,
+        item._tipo || "filme"
+    );
+
+    if (card) {
+
+        row.appendChild(card);
+
+    }
+
+});
+
+}
+
 function toggleLista(item, tipo, btn) {
     const idx = minhaLista.findIndex(x => x.id === item.id);
     if (idx === -1) {
@@ -2247,6 +2400,9 @@ if (item) {
     tmdbAtual = item.id;
     tipoAtual = tipo;
 }
+
+// adiciona em continuar assistindo
+adicionarContinuarAssistindo(item, tipo);
 
 const sel = document.getElementById("seletorSerie");
 
@@ -2523,6 +2679,8 @@ if (scrollAtual >= alturaTotal - 1000) {
 });
 
 carregarInicio();
+
+renderContinuarAssistindo();
 
 /* ══════════════════════════════════════════════
    MOBILE MENU
