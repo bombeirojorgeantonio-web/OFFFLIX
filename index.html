@@ -718,16 +718,63 @@ z-index:5;
    PLAYER MODAL
 ══════════════════════════════════ */
 .player-modal{
-    position:fixed;inset:0;
-    background:rgba(0,0,0,0.97);
-    display:none;
-    justify-content:center;
-    align-items:center;
-    z-index:999999;
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100vw;
+height:100vh;
+
+background:#000;
+
+display:none;
+
+justify-content:center;
+align-items:center;
+
+z-index:999999;
+
+overflow:hidden;
+
+}.player-modal{
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100vw;
+height:100vh;
+
+background:#000;
+
+display:none;
+
+justify-content:center;
+align-items:center;
+
+z-index:999999;
+
+overflow:hidden;
+
 }
 .player-modal.open{display:flex;}
 .player-container{
-    width:94%;max-width:1500px;
+
+position:relative;
+
+width:100vw;
+
+height:100vh;
+
+max-width:none;
+
+background:#000;
+
+overflow:hidden;
+
 }
 .player-top{
     display:flex;
@@ -799,14 +846,22 @@ z-index:5;
 #btnIrEpisodio:hover{background:#ff2020;}
 
 .player-frame{
-    width:100%;
-    height:85vh;
 
-    border:none;
+position:absolute;
 
-    border-radius:12px;
+top:0;
+left:0;
 
-    background:#000;
+width:100%;
+
+height:100%;
+
+border:none;
+
+border-radius:0;
+
+background:#000;
+
 }
 
 /* ══════════════════════════════════
@@ -858,10 +913,6 @@ z-index:5;
 
 .search-input{
     width:200px;
-}
-
-.player-frame{
-    height:80vh;
 }
 
 /* =========================================================
@@ -942,10 +993,6 @@ z-index:5;
         width:90px;
     }
 
-    .player-frame{
-    height:100vh;
-    border-radius:0;
-}
     .category{
     padding-left:0;
     padding-right:0;
@@ -1265,52 +1312,6 @@ z-index:5;
 
 }
 
-/* FULLSCREEN MOBILE/TABLET */
-
-@media screen and (max-width:900px){
-
-.player-modal{
-
-    padding:0 !important;
-
-    background:#000;
-
-}
-
-.player-container{
-
-    width:100vw !important;
-    height:100vh !important;
-
-    max-width:none !important;
-
-    border-radius:0 !important;
-
-    padding:0 !important;
-
-    background:#000;
-
-}
-
-.player-top{
-
-    padding:10px;
-
-    border-radius:0;
-
-}
-
-.player-frame{
-
-    width:100vw !important;
-    height:100vh !important;
-
-    border-radius:0 !important;
-
-}
-
-}
-
 </style>
 </head>
 <body>
@@ -1419,7 +1420,7 @@ z-index:5;
 <!-- CONTINUAR ASSISTINDO -->
 <section class="category" id="continuarAssistindoSection" style="display:none;">
     <div class="category-header">
-        <h2>▶️ Continuar Assistindo</h2>
+        <h2>▶ Continuar Assistindo</h2>
         <div class="cat-line"></div>
     </div>
 
