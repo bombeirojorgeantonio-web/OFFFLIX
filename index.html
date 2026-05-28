@@ -798,32 +798,10 @@ z-index:5;
 }
 #btnIrEpisodio:hover{background:#ff2020;}
 
-.player-zoom-area{
-    width:100%;
-    height:80vh;
-
-    overflow:hidden;
-
-    position:relative;
-
-    background:#000;
-
-    border-radius:12px;
-
-    touch-action:none;
-}
-
 .player-frame{
-    width:100%;
-    height:100%;
-
-    border:none;
-
+    width:100%;height:80vh;
+    border:none;border-radius:12px;
     background:#000;
-
-    transform-origin:center center;
-
-    transition:transform 0.15s ease;
 }
 
 /* ══════════════════════════════════
@@ -1512,19 +1490,6 @@ z-index:5;
         <div class="player-top">
             <div class="player-title-text" id="playerTitle">Carregando...</div>
             <div class="player-controls">
-
-                <button class="server-btn" id="zoomOutBtn">
-                    ➖
-                </button>
-                
-                <button class="server-btn" id="zoomResetBtn">
-                    🔄
-                </button>
-                
-                <button class="server-btn" id="zoomInBtn">
-                    ➕
-                </button>
-                
                 <button class="server-btn active" data-server="1">Player 1</button>
                 
                 
@@ -1540,18 +1505,14 @@ z-index:5;
             <input type="number" id="inputEpisodio" value="1" min="1">
             <button id="btnIrEpisodio">▶ Ir</button>
         </div>
-        <div class="player-zoom-area" id="playerZoomArea">
-
-            <iframe
-            class="player-frame"
-            id="playerFrame"
-            frameborder="0"
-            scrolling="no"
-            allowfullscreen
-            allow="autoplay; fullscreen">
-            </iframe>
-        
-        </div>
+        <iframe
+        class="player-frame"
+        id="playerFrame"
+        frameborder="0"
+        scrolling="no"
+        allowfullscreen
+        allow="autoplay; fullscreen">
+    </iframe>
     </div>
 </div>
 
@@ -2943,60 +2904,354 @@ activateBtn.addEventListener("click", () => {
 
 });
 
-/* ═══════════════════════════════════════
-   ZOOM MANUAL PLAYER
-═══════════════════════════════════════ */
+</script>
 
-const playerFrame =
-document.getElementById("playerFrame");
+```html
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-let zoomLevel = 1;
+<script>
 
-function aplicarZoom(){
+// ========================================
+// CONFIG SUPABASE
+// ========================================
 
-    playerFrame.style.transform =
-    `scale(${zoomLevel})`;
+const SUPABASE_URL =
+"https://liwkwbwpprboymonkwlc.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_8HZ5TPRy5huxg7n1u5yPWg_c5wvwCMu";
+
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+// ========================================
+// CRIA TELA DE BLOQUEIO
+// ========================================
+
+const lockScreen = document.createElement("div");
+
+lockScreen.id = "lockScreen";
+
+lockScreen.innerHTML = `
+
+<div class="lock-box">
+
+    <h1>OFFFLIX</h1>
+
+    <p>
+        Digite seu código de acesso
+    </p>
+
+    <input
+        type="text"
+        id="codigoInput"
+        placeholder="Código"
+    >
+
+    <button id="ativarBtn">
+        ATIVAR ACESSO
+    </button>
+
+    <div id="lockMsg"></div>
+
+</div>
+
+`;
+
+document.body.appendChild(lockScreen);
+
+// ========================================
+// CSS DA TELA
+// ========================================
+
+const lockStyle =
+document.createElement("style");
+
+lockStyle.innerHTML = `
+
+#lockScreen{
+
+    position:fixed;
+    inset:0;
+
+    background:#000;
+
+    z-index:999999999;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+}
+
+.lock-box{
+
+    width:100%;
+    max-width:420px;
+
+    background:#111;
+
+    border:1px solid #222;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    text-align:center;
+}
+
+.lock-box h1{
+
+    color:#E50914;
+
+    font-size:45px;
+
+    margin-bottom:10px;
+}
+
+.lock-box p{
+
+    color:#999;
+
+    margin-bottom:20px;
+}
+
+#codigoInput{
+
+    width:100%;
+
+    height:55px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#1b1b1b;
+
+    color:#fff;
+
+    padding:15px;
+
+    font-size:16px;
+
+    margin-bottom:15px;
+
+    outline:none;
+}
+
+#ativarBtn{
+
+    width:100%;
+
+    height:55px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#E50914;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+#lockMsg{
+
+    margin-top:15px;
+
+    color:#999;
+
+    font-size:14px;
+}
+
+`;
+
+document.head.appendChild(lockStyle);
+
+// ========================================
+// GERAR ID DO DISPOSITIVO
+// ========================================
+
+function gerarDispositivo(){
+
+    let id =
+    localStorage.getItem("offflix_device");
+
+    if(!id){
+
+        id =
+        crypto.randomUUID();
+
+        localStorage.setItem(
+            "offflix_device",
+            id
+        );
+
+    }
+
+    return id;
+}
+
+// ========================================
+// LIBERAR SITE
+// ========================================
+
+function liberarSite(){
+
+    lockScreen.style.display = "none";
 
 }
 
-// botão +
-document.getElementById("zoomInBtn")
-.addEventListener("click", () => {
+// ========================================
+// VERIFICA SESSÃO
+// ========================================
 
-    zoomLevel += 0.1;
+async function verificarSessao(){
 
-    if(zoomLevel > 3){
-        zoomLevel = 3;
+    const codigo =
+    localStorage.getItem(
+        "offflix_codigo"
+    );
+
+    if(!codigo) return;
+
+    const dispositivo =
+    gerarDispositivo();
+
+    const { data, error } =
+    await supabaseClient
+    .from("codigos")
+    .select("*")
+    .eq("codigo", codigo)
+    .eq("dispositivo", dispositivo)
+    .single();
+
+    if(data){
+
+        const agora =
+        new Date();
+
+        const expiracao =
+        new Date(data.expira_em);
+
+        if(agora < expiracao){
+
+            liberarSite();
+
+        }
+
     }
 
-    aplicarZoom();
+}
 
-});
+verificarSessao();
 
-// botão -
-document.getElementById("zoomOutBtn")
-.addEventListener("click", () => {
+// ========================================
+// BOTÃO ATIVAR
+// ========================================
 
-    zoomLevel -= 0.1;
+document
+.getElementById("ativarBtn")
+.addEventListener("click", ativarCodigo);
 
-    if(zoomLevel < 1){
-        zoomLevel = 1;
+async function ativarCodigo(){
+
+    const codigo =
+    document
+    .getElementById("codigoInput")
+    .value
+    .trim();
+
+    const msg =
+    document
+    .getElementById("lockMsg");
+
+    if(!codigo){
+
+        msg.innerHTML =
+        "Digite um código";
+
+        return;
     }
 
-    aplicarZoom();
+    msg.innerHTML =
+    "Verificando...";
 
-});
+    const dispositivo =
+    gerarDispositivo();
 
-// reset
-document.getElementById("zoomResetBtn")
-.addEventListener("click", () => {
+    const { data, error } =
+    await supabaseClient
+    .from("codigos")
+    .select("*")
+    .eq("codigo", codigo)
+    .single();
 
-    zoomLevel = 1;
+    if(error || !data){
 
-    aplicarZoom();
+        msg.innerHTML =
+        "Código inválido";
 
-});
+        return;
+    }
+
+    // já usado em outro aparelho
+    if(
+        data.dispositivo &&
+        data.dispositivo !== dispositivo
+    ){
+
+        msg.innerHTML =
+        "Código já utilizado";
+
+        return;
+    }
+
+    // expirado
+    const agora =
+    new Date();
+
+    const expiracao =
+    new Date(data.expira_em);
+
+    if(agora > expiracao){
+
+        msg.innerHTML =
+        "Código expirado";
+
+        return;
+    }
+
+    // salva dispositivo
+    await supabaseClient
+    .from("codigos")
+    .update({
+        dispositivo: dispositivo
+    })
+    .eq("codigo", codigo);
+
+    // salva sessão
+    localStorage.setItem(
+        "offflix_codigo",
+        codigo
+    );
+
+    liberarSite();
+
+}
 
 </script>
+```
+
 </body>
 </html>
