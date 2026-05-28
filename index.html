@@ -3144,15 +3144,26 @@ async function verificarSessao(){
         const expiracao =
         new Date(data.expira_em);
 
-        if(agora < expiracao){
+        ```js id="y5m1qd"
+if(agora < expiracao){
+
+    liberarSite();
+
+}
+else{
+
+    localStorage.removeItem(
+        "offflix_codigo"
+    );
+
+}
+```
 
             liberarSite();
 
         }
 
     }
-
-}
 
 verificarSessao();
 
@@ -3196,6 +3207,18 @@ async function ativarCodigo(){
     .select("*")
     .eq("codigo", codigo)
     .single();
+
+    ```js id="k3m9xd"
+if(data && data.ativo === false){
+
+    msg.innerHTML =
+    "Acesso desativado";
+
+    return;
+
+}
+```
+
 
     if(error || !data){
 
@@ -3249,6 +3272,51 @@ async function ativarCodigo(){
     liberarSite();
 
 }
+
+```js id="j9m2xf"
+// bloqueia clique direito
+document.addEventListener(
+    "contextmenu",
+    e => e.preventDefault()
+);
+
+// bloqueia teclas
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        // F12
+        if(e.key === "F12"){
+
+            e.preventDefault();
+
+        }
+
+        // CTRL + SHIFT + I
+        if(
+            e.ctrlKey &&
+            e.shiftKey &&
+            e.key.toLowerCase() === "i"
+        ){
+
+            e.preventDefault();
+
+        }
+
+        // CTRL + U
+        if(
+            e.ctrlKey &&
+            e.key.toLowerCase() === "u"
+        ){
+
+            e.preventDefault();
+
+        }
+
+    }
+);
+```
+
 
 </script>
 ```
