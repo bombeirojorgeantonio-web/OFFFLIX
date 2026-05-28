@@ -2735,7 +2735,7 @@ document.getElementById("continueWithoutBtn");
 // =====================================
 
 // código secreto
-const OFFFLIX_CODE = "OFFFLIX2026";
+const WARNING_CODE = "OFFFLIX2026";
 
 // =====================================
 // CRIA INPUT DO CÓDIGO
@@ -2879,7 +2879,7 @@ activateBtn.addEventListener("click", () => {
     codeInput.value.trim();
 
     // código correto
-    if (code === OFFFLIX_CODE) {
+    if (code === WARNING_CODE) {
 
         // salva permanentemente
         localStorage.setItem(
@@ -2980,7 +2980,7 @@ lockStyle.innerHTML = `
 
     background:#000;
 
-    z-index:999999999;
+    z-index:2147483647;
 
     display:flex;
     align-items:center;
