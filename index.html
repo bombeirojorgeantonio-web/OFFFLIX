@@ -2906,7 +2906,6 @@ activateBtn.addEventListener("click", () => {
 
 </script>
 
-```html
 <!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -2929,34 +2928,33 @@ supabase.createClient(
 );
 
 // ========================================
-// CRIA TELA DE BLOQUEIO
+// CRIA TELA BLOQUEIO
 // ========================================
 
-const lockScreen = document.createElement("div");
+const lockScreen =
+document.createElement("div");
 
-lockScreen.id = "lockScreen";
+lockScreen.id =
+"lockScreen";
 
 lockScreen.innerHTML = `
 
 <div class="lock-box">
 
-    <h1>OFFFLIX</h1>
+<h1>OFFFLIX</h1>
 
-    <p>
-        Digite seu código de acesso
-    </p>
+<p>Digite seu código de acesso</p>
 
-    <input
-        type="text"
-        id="codigoInput"
-        placeholder="Código"
-    >
+<input
+type="text"
+id="codigoInput"
+placeholder="Código">
 
-    <button id="ativarBtn">
-        ATIVAR ACESSO
-    </button>
+<button id="ativarBtn">
+ATIVAR ACESSO
+</button>
 
-    <div id="lockMsg"></div>
+<div id="lockMsg"></div>
 
 </div>
 
@@ -2965,7 +2963,7 @@ lockScreen.innerHTML = `
 document.body.appendChild(lockScreen);
 
 // ========================================
-// CSS DA TELA
+// CSS
 // ========================================
 
 const lockStyle =
@@ -2975,103 +2973,98 @@ lockStyle.innerHTML = `
 
 #lockScreen{
 
-    position:fixed;
-    inset:0;
+position:fixed;
+inset:0;
 
-    background:#000;
+background:#000;
 
-    z-index:2147483647;
+z-index:2147483647;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+display:flex;
 
-    padding:20px;
+align-items:center;
+justify-content:center;
+
+padding:20px;
 }
 
 .lock-box{
 
-    width:100%;
-    max-width:420px;
+width:100%;
+max-width:420px;
 
-    background:#111;
+background:#111;
 
-    border:1px solid #222;
+border-radius:20px;
 
-    border-radius:20px;
+padding:30px;
 
-    padding:30px;
-
-    text-align:center;
+text-align:center;
 }
 
 .lock-box h1{
 
-    color:#E50914;
+font-size:45px;
 
-    font-size:45px;
+color:#E50914;
 
-    margin-bottom:10px;
+margin-bottom:10px;
 }
 
 .lock-box p{
 
-    color:#999;
+color:#999;
 
-    margin-bottom:20px;
+margin-bottom:20px;
 }
 
 #codigoInput{
 
-    width:100%;
+width:100%;
 
-    height:55px;
+height:55px;
 
-    border:none;
+border:none;
 
-    border-radius:12px;
+border-radius:12px;
 
-    background:#1b1b1b;
+background:#1b1b1b;
 
-    color:#fff;
+padding:15px;
 
-    padding:15px;
+color:white;
 
-    font-size:16px;
+font-size:16px;
 
-    margin-bottom:15px;
-
-    outline:none;
+margin-bottom:15px;
 }
 
 #ativarBtn{
 
-    width:100%;
+width:100%;
 
-    height:55px;
+height:55px;
 
-    border:none;
+border:none;
 
-    border-radius:12px;
+border-radius:12px;
 
-    background:#E50914;
+background:#E50914;
 
-    color:white;
+color:white;
 
-    font-size:16px;
+font-size:16px;
 
-    font-weight:bold;
+font-weight:bold;
 
-    cursor:pointer;
+cursor:pointer;
 }
 
 #lockMsg{
 
-    margin-top:15px;
+margin-top:15px;
 
-    color:#999;
-
-    font-size:14px;
+color:#999;
 }
 
 `;
@@ -3079,27 +3072,30 @@ lockStyle.innerHTML = `
 document.head.appendChild(lockStyle);
 
 // ========================================
-// GERAR ID DO DISPOSITIVO
+// GERAR ID DISPOSITIVO
 // ========================================
 
 function gerarDispositivo(){
 
-    let id =
-    localStorage.getItem("offflix_device");
+let id =
+localStorage.getItem(
+"offflix_device"
+);
 
-    if(!id){
+if(!id){
 
-        id =
-        crypto.randomUUID();
+id =
+crypto.randomUUID();
 
-        localStorage.setItem(
-            "offflix_device",
-            id
-        );
+localStorage.setItem(
+"offflix_device",
+id
+);
 
-    }
+}
 
-    return id;
+return id;
+
 }
 
 // ========================================
@@ -3108,62 +3104,78 @@ function gerarDispositivo(){
 
 function liberarSite(){
 
-    lockScreen.style.display = "none";
+lockScreen.style.display =
+"none";
 
 }
 
 // ========================================
-// VERIFICA SESSÃO
+// VERIFICAR LOGIN SALVO
 // ========================================
 
 async function verificarSessao(){
 
-    const codigo =
-    localStorage.getItem(
-        "offflix_codigo"
-    );
+const codigo =
+localStorage.getItem(
+"offflix_codigo"
+);
 
-    if(!codigo) return;
+if(!codigo) return;
 
-    const dispositivo =
-    gerarDispositivo();
+const dispositivo =
+gerarDispositivo();
 
-    const { data, error } =
-    await supabaseClient
-    .from("codigos")
-    .select("*")
-    .eq("codigo", codigo)
-    .eq("dispositivo", dispositivo)
-    .single();
+const { data } =
+await supabaseClient
+.from("codigos")
+.select("*")
+.eq("codigo", codigo)
+.eq("dispositivo", dispositivo)
+.single();
 
-    if(data){
+if(!data) return;
 
-        const agora =
-        new Date();
+// bloqueado
+if(data.ativo === false){
 
-        const expiracao =
-        new Date(data.expira_em);
+localStorage.removeItem(
+"offflix_codigo"
+);
 
-        ```js id="y5m1qd"
+return;
+
+}
+
+// infinito
+if(data.infinito === true){
+
+liberarSite();
+
+return;
+
+}
+
+// expiração
+const agora =
+new Date();
+
+const expiracao =
+new Date(data.expira_em);
+
 if(agora < expiracao){
 
-    liberarSite();
+liberarSite();
 
 }
 else{
 
-    localStorage.removeItem(
-        "offflix_codigo"
-    );
+localStorage.removeItem(
+"offflix_codigo"
+);
 
 }
-```
 
-            liberarSite();
-
-        }
-
-    }
+}
 
 verificarSessao();
 
@@ -3173,153 +3185,120 @@ verificarSessao();
 
 document
 .getElementById("ativarBtn")
-.addEventListener("click", ativarCodigo);
+.addEventListener(
+"click",
+ativarCodigo
+);
 
 async function ativarCodigo(){
 
-    const codigo =
-    document
-    .getElementById("codigoInput")
-    .value
-    .trim();
+const codigo =
+document
+.getElementById("codigoInput")
+.value
+.trim();
 
-    const msg =
-    document
-    .getElementById("lockMsg");
+const msg =
+document
+.getElementById("lockMsg");
 
-    if(!codigo){
+if(!codigo){
 
-        msg.innerHTML =
-        "Digite um código";
+msg.innerHTML =
+"Digite um código";
 
-        return;
-    }
-
-    msg.innerHTML =
-    "Verificando...";
-
-    const dispositivo =
-    gerarDispositivo();
-
-    const { data, error } =
-    await supabaseClient
-    .from("codigos")
-    .select("*")
-    .eq("codigo", codigo)
-    .single();
-
-    ```js id="k3m9xd"
-if(data && data.ativo === false){
-
-    msg.innerHTML =
-    "Acesso desativado";
-
-    return;
-
-}
-```
-
-
-    if(error || !data){
-
-        msg.innerHTML =
-        "Código inválido";
-
-        return;
-    }
-
-    // já usado em outro aparelho
-    if(
-        data.dispositivo &&
-        data.dispositivo !== dispositivo
-    ){
-
-        msg.innerHTML =
-        "Código já utilizado";
-
-        return;
-    }
-
-    // expirado
-    const agora =
-    new Date();
-
-    const expiracao =
-    new Date(data.expira_em);
-
-    if(agora > expiracao){
-
-        msg.innerHTML =
-        "Código expirado";
-
-        return;
-    }
-
-    // salva dispositivo
-    await supabaseClient
-    .from("codigos")
-    .update({
-        dispositivo: dispositivo
-    })
-    .eq("codigo", codigo);
-
-    // salva sessão
-    localStorage.setItem(
-        "offflix_codigo",
-        codigo
-    );
-
-    liberarSite();
+return;
 
 }
 
-```js id="j9m2xf"
-// bloqueia clique direito
-document.addEventListener(
-    "contextmenu",
-    e => e.preventDefault()
+msg.innerHTML =
+"Verificando...";
+
+const dispositivo =
+gerarDispositivo();
+
+const { data, error } =
+await supabaseClient
+.from("codigos")
+.select("*")
+.eq("codigo", codigo)
+.single();
+
+console.log(data);
+console.log(error);
+
+if(error || !data){
+
+msg.innerHTML =
+"Código inválido";
+
+return;
+
+}
+
+// acesso desativado
+if(data.ativo === false){
+
+msg.innerHTML =
+"Acesso desativado";
+
+return;
+
+}
+
+// aparelho diferente
+if(
+data.dispositivo &&
+data.dispositivo !== dispositivo
+){
+
+msg.innerHTML =
+"Código já utilizado";
+
+return;
+
+}
+
+// se NÃO infinito
+if(data.infinito !== true){
+
+const agora =
+new Date();
+
+const expiracao =
+new Date(data.expira_em);
+
+if(agora > expiracao){
+
+msg.innerHTML =
+"Código expirado";
+
+return;
+
+}
+
+}
+
+// salva aparelho
+await supabaseClient
+.from("codigos")
+.update({
+dispositivo: dispositivo
+})
+.eq("codigo", codigo);
+
+// salva login
+localStorage.setItem(
+"offflix_codigo",
+codigo
 );
 
-// bloqueia teclas
-document.addEventListener(
-    "keydown",
-    function(e){
+// libera
+liberarSite();
 
-        // F12
-        if(e.key === "F12"){
-
-            e.preventDefault();
-
-        }
-
-        // CTRL + SHIFT + I
-        if(
-            e.ctrlKey &&
-            e.shiftKey &&
-            e.key.toLowerCase() === "i"
-        ){
-
-            e.preventDefault();
-
-        }
-
-        // CTRL + U
-        if(
-            e.ctrlKey &&
-            e.key.toLowerCase() === "u"
-        ){
-
-            e.preventDefault();
-
-        }
-
-    }
-);
-```
-
+}
 
 </script>
-```
 
 </body>
 </html>
